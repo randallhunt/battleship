@@ -14,9 +14,9 @@ import "../css/app.scss"
 //
 import "phoenix_html"
 
+import ships from "./ships.js";
 import Vue from "vue";
 import App from "./components/App.vue";
-
 
 import { Socket } from "phoenix";
 let socket = new Socket("/socket", {params: {userToken: "123"}});
@@ -24,12 +24,26 @@ socket.connect();
 let channel = socket.channel('battleship', {token: 'btl'});
 
 let my_ships = {
-  carrier: [[1,1], [2,1], [3,1], [4,1], [5,1]],
-  battleship: [[6,3], [7,3], [8,3], [9,3]],
-  cruiser: [[2,5], [3,5], [4,5]],
-  submarine: [[8,7], [9,7], [10,7]],
-  destroyer: [[1,9], [2,9]]
+  carrier: ships.toCoords('carrier', 'A1', ships.HORIZONTAL),
+  battleship: ships.toCoords('battleship', 'F3', ships.HORIZONTAL),
+  cruiser: ships.toCoords('cruiser', 'B5', ships.HORIZONTAL),
+  submarine: ships.toCoords('submarine', 'H7', ships.HORIZONTAL),
+  destroyer: ships.toCoords('destroyer', 'A9', ships.HORIZONTAL)
+  // carrier: ['A1', 'B1', 'C1', 'D1', 'E1'],
+  // battleship: ['F3', 'G3', 'H3', 'I3'],
+  // cruiser: ['B5', 'C5', 'D5'],
+  // submarine: ['H7', 'I7', 'J7'],
+  // destroyer: ['A9', 'B9']
 };
+
+ships.place('carrier', my_ships.carrier);
+ships.place('battleship', my_ships.battleship);
+ships.place('cruiser', my_ships.cruiser);
+ships.place('submarine', my_ships.submarine);
+ships.place('destroyer', my_ships.destroyer);
+// console.log(ships.collision())
+// debugger;
+
 let enemy_ships = {
   carrier: [],
   battleship: [],
