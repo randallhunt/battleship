@@ -49,10 +49,19 @@ function place(name, coords) {
         case 'submarine':
         case 'destroyer':
             obj[name] = coords;
-            console.log('ships', obj);
             return;
     }
     throw "Unrecognized ship name '" + name + "'";
+}
+
+function guess(address) {
+    if (obj.guesses.indexOf(address) > -1) {
+        return 0;
+    }
+    obj.guesses.push(address);
+
+    // random hit or miss
+    return Math.round(Math.random()) ? 1 : -1;
 }
 
 let obj = {
@@ -65,9 +74,11 @@ let obj = {
     cruiser: [],
     submarine: [],
     destroyer: [],
+    guesses: [],
     // methods
     toCoords,
     collision,
-    place
+    place,
+    guess
 };
 export default obj;

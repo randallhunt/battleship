@@ -2,7 +2,6 @@
   <td :class="computedClass" @click="guess()" key="'cell' + colCode() + row">
       <div v-if="hit">X</div>
       <div v-if="miss">O</div>
-      <!-- {{ colCode() }} : {{ row }} -->
   </td>
 </template>
 
@@ -35,9 +34,12 @@ export default {
     methods: {
         guess() {
             if (!this.clicked) {
-                let result = Math.round(Math.random());
-                this.miss = !result;
-                this.hit = result;
+                const cols = 'ABCDEFGHIJ';
+                const address = cols[this.col - 1] + this.row;
+                const result = this.$ships.guess(address);
+
+                this.miss = result > 0;
+                this.hit = result < 0;
                 this.clicked = true;
             }
         },
@@ -46,7 +48,7 @@ export default {
         },
     },
     created() {
-        // console.log("Tile created");
+        //
     }
 }
 </script>

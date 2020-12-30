@@ -41,8 +41,6 @@ ships.place('battleship', my_ships.battleship);
 ships.place('cruiser', my_ships.cruiser);
 ships.place('submarine', my_ships.submarine);
 ships.place('destroyer', my_ships.destroyer);
-// console.log(ships.collision())
-// debugger;
 
 let enemy_ships = {
   carrier: [],
@@ -51,7 +49,8 @@ let enemy_ships = {
   submarine: [],
   destroyer: []
 };
-let guesses = [];
+
+Vue.prototype.$ships = ships;
 
 new Vue({
   render: h => h(App)
