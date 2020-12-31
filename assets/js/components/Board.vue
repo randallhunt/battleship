@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <Row v-for="row in 10" :index="row"></Row>
+            <Row v-for="row in 10" :index="row" :mine="mine"></Row>
         </tbody>
     </table>
 </div>
@@ -33,7 +33,8 @@ export default {
         Row
     },
     props: {
-        title: String
+        title: String,
+        mine: Boolean
     },
     data() {
         return {};

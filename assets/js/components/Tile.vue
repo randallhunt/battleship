@@ -10,7 +10,8 @@ export default {
     name: 'Tile',
     props: {
         col: Number,
-        row: Number
+        row: Number,
+        mine: Boolean
     },
     data() {
         return {
@@ -32,7 +33,15 @@ export default {
         }
     },
     methods: {
+        mousedown() {
+            if (!this.mine) return;
+        },
+        mouseup() {
+            if (!this.mine) return;
+        },
         guess() {
+            if (this.mine) return;
+
             if (!this.clicked) {
                 const cols = 'ABCDEFGHIJ';
                 const address = cols[this.col - 1] + this.row;

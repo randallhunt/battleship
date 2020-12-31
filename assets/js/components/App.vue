@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Board :title="'My Board'"></Board>
-    <Board :title="'Enemy Board'"></Board>
+    <Board :title="'My Board'" :mine="true"></Board>
+    <Board :title="'Enemy Board'" :mine="false"></Board>
   </div>
 </template>
 

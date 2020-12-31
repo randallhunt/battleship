@@ -1,7 +1,7 @@
 <template>
     <tr class="row" key="'row' + index">
         <th role="row">{{index}}</th>
-        <Tile v-for="col in 10" :row="index" :col="col"></Tile>
+        <Tile v-for="col in 10" :row="index" :col="col" :mine="mine"></Tile>
     </tr>
 </template>
 
@@ -14,7 +14,8 @@ export default {
         Tile
     },
     props: {
-        index: Number
+        index: Number,
+        mine: Boolean
     },
     data() {
         return {
