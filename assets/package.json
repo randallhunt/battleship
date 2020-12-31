@@ -1,6 +1,6 @@
 {
   "repository": {},
-  "description": " ",
+  "description": "Battleship game",
   "license": "MIT",
   "scripts": {
     "deploy": "NODE_ENV=production webpack --mode production",
