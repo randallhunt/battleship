@@ -25,15 +25,10 @@ let channel = socket.channel('battleship', {token: 'btl'});
 
 let my_ships = {
   carrier: ships.toCoords('carrier', 'A1', ships.HORIZONTAL),
-  battleship: ships.toCoords('battleship', 'F3', ships.HORIZONTAL),
+  battleship: ships.toCoords('battleship', 'H2', ships.VERTICAL),
   cruiser: ships.toCoords('cruiser', 'B5', ships.HORIZONTAL),
   submarine: ships.toCoords('submarine', 'H7', ships.HORIZONTAL),
   destroyer: ships.toCoords('destroyer', 'A9', ships.HORIZONTAL)
-  // carrier: ['A1', 'B1', 'C1', 'D1', 'E1'],
-  // battleship: ['F3', 'G3', 'H3', 'I3'],
-  // cruiser: ['B5', 'C5', 'D5'],
-  // submarine: ['H7', 'I7', 'J7'],
-  // destroyer: ['A9', 'B9']
 };
 
 ships.place('carrier', my_ships.carrier);
@@ -41,14 +36,6 @@ ships.place('battleship', my_ships.battleship);
 ships.place('cruiser', my_ships.cruiser);
 ships.place('submarine', my_ships.submarine);
 ships.place('destroyer', my_ships.destroyer);
-
-let enemy_ships = {
-  carrier: [],
-  battleship: [],
-  cruiser: [],
-  submarine: [],
-  destroyer: []
-};
 
 Vue.prototype.$ships = ships;
 
