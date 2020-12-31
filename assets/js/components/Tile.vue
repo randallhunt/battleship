@@ -6,6 +6,11 @@
 </template>
 
 <script>
+const cols = 'ABCDEFGHIJ';
+function toCell(x, y) {
+    return cols.charAt(x - 1) + y;
+}
+
 export default {
     name: 'Tile',
     props: {
@@ -23,12 +28,14 @@ export default {
     computed: {
         computedClass() {
             let result = "tile";
-            if (this.miss) {
-                result += ' miss';
+            if (this.mine) {
+                const cell = toCell(this.col, this.row);
+                if (this.$ships.collision([cell])) result += ' boat';
+            } else {
+                if (this.miss) result += ' miss';
+                if (this.hit) result += ' hit';
             }
-            if (this.hit) {
-                result += ' hit';
-            }
+
             return result;
         }
     },
@@ -44,13 +51,11 @@ export default {
 
             this.$message({
                 player: 1,
-                tile: [this.col, this.row]
+                tile: toCell(this.col, this.row)
             });
 
             if (!this.clicked) {
-                const cols = 'ABCDEFGHIJ';
-                const address = cols[this.col - 1] + this.row;
-                const result = this.$ships.guess(address);
+                const result = this.$ships.guess(toCell(this.col, this.row));
 
                 this.miss = result < 0;
                 this.hit = result > 0;
@@ -82,6 +87,9 @@ export default {
 }
 .tile.hit {
     background-color: rgba(220, 60, 60, 0.5);
+}
+.tile.boat {
+    background-color: rgba(60, 220, 60, 0.5);
 }
 .row:last-child .tile {
     border-bottom: solid 1px #000;

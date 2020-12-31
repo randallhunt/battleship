@@ -12,7 +12,7 @@ defmodule BattleshipWeb.GameChannel do
     end
 
     def handle_in("guess", %{"body" => body}, socket) do
-        broadcast!(socket, "new_msg", %{body: body})
+        broadcast!(socket, "guessed", %{body: body})
         {:noreply, socket}
     end
 end

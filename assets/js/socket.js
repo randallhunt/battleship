@@ -47,22 +47,11 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("room:game", {});
+// let channel = socket.channel("room:game", {});
 
-channel.join();
+// channel.join();
 //  .receive("ok", resp => { console.log("Joined successfully", resp) })
 //  .receive("error", resp => { console.log("Unable to join", resp) })
 
-function message(payload) {
-  console.log('payload', payload);
-  channel.push('guess', {body: payload})
-    .receive('ok', payload => console.log("phoenix replied:", payload))
-    .receive("error", err => console.log("phoenix errored", err))
-    .receive("timeout", () => console.log("timed out pushing"))
-}
 
-export default {
-  socket,
-  channel,
-  message
-};
+export default socket;

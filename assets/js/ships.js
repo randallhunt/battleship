@@ -29,9 +29,9 @@ function toCoords(kind, start, orientation) {
     return result;
 }
 
-function collision(coords) {
-    for (let i=0; i<coords.length; i++) {
-        const pt = coords[i];
+function collision(cells) {
+    for (let i=0; i<cells.length; i++) {
+        const pt = cells[i];
         if (obj.carrier.indexOf(pt) > -1) return true;
         if (obj.battleship.indexOf(pt) > -1) return true;
         if (obj.cruiser.indexOf(pt) > -1) return true;

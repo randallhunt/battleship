@@ -6,8 +6,21 @@ import ships from "./ships.js";
 import Vue from "vue";
 import App from "./components/App.vue";
 
-import sock from "./socket";
+import socket from "./socket";
 
+const channel = socket.channel("room:game", {});
+channel.join();
+
+function message(payload) {
+  channel.push('guess', {body: payload})
+    .receive('ok', payload => console.log("phoenix replied:", payload))
+    .receive("error", err => console.log("phoenix errored", err))
+    .receive("timeout", () => console.log("timed out pushing"));
+}
+
+channel.on('guessed', payload => {
+  // console.log('received', payload.body.tile);
+});
 
 let my_ships = {
   carrier: ships.toCoords('carrier', 'A1', ships.HORIZONTAL),
@@ -24,7 +37,7 @@ ships.place('submarine', my_ships.submarine);
 ships.place('destroyer', my_ships.destroyer);
 
 Vue.prototype.$ships = ships;
-Vue.prototype.$message = sock.message;
+Vue.prototype.$message = message;
 
 new Vue({
   render: h => h(App)
