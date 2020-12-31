@@ -32,11 +32,11 @@ function toCoords(kind, start, orientation) {
 function collision(coords) {
     for (let i=0; i<coords.length; i++) {
         const pt = coords[i];
-        if (carrier.indexOf(pt)) return true;
-        if (battleship.indexOf(pt)) return true;
-        if (cruiser.indexOf(pt)) return true;
-        if (submarine.indexOf(pt)) return true;
-        if (destroyer.indexOf(pt)) return true;
+        if (obj.carrier.indexOf(pt) > -1) return true;
+        if (obj.battleship.indexOf(pt) > -1) return true;
+        if (obj.cruiser.indexOf(pt) > -1) return true;
+        if (obj.submarine.indexOf(pt) > -1) return true;
+        if (obj.destroyer.indexOf(pt) > -1) return true;
     }
     return false;
 }
@@ -60,8 +60,10 @@ function guess(address) {
     }
     obj.guesses.push(address);
 
-    // random hit or miss
-    return Math.round(Math.random()) ? 1 : -1;
+    return collision([address]) ? 1 : -1;
+
+    // // random hit or miss
+    // return Math.round(Math.random()) ? 1 : -1;
 }
 
 let obj = {

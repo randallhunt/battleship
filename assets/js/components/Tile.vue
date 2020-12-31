@@ -38,8 +38,8 @@ export default {
                 const address = cols[this.col - 1] + this.row;
                 const result = this.$ships.guess(address);
 
-                this.miss = result > 0;
-                this.hit = result < 0;
+                this.miss = result < 0;
+                this.hit = result > 0;
                 this.clicked = true;
             }
         },
