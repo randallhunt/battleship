@@ -1,11 +1,3 @@
-// NOTE: The contents of this file will only be executed if
-// you uncomment its entry in "assets/js/app.js".
-
-// To use Phoenix channels, the first step is to import Socket,
-// and connect at the socket path in "lib/web/endpoint.ex".
-//
-// Pass the token on params as below. Or remove it
-// from the params if you are not using authentication.
 import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
@@ -55,9 +47,22 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+let channel = socket.channel("room:game", {});
 
-export default socket
+channel.join();
+//  .receive("ok", resp => { console.log("Joined successfully", resp) })
+//  .receive("error", resp => { console.log("Unable to join", resp) })
+
+function message(payload) {
+  console.log('payload', payload);
+  channel.push('guess', {body: payload})
+    .receive('ok', payload => console.log("phoenix replied:", payload))
+    .receive("error", err => console.log("phoenix errored", err))
+    .receive("timeout", () => console.log("timed out pushing"))
+}
+
+export default {
+  socket,
+  channel,
+  message
+};

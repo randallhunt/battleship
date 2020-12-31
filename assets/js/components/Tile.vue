@@ -42,6 +42,11 @@ export default {
         guess() {
             if (this.mine) return;
 
+            this.$message({
+                player: 1,
+                tile: [this.col, this.row]
+            });
+
             if (!this.clicked) {
                 const cols = 'ABCDEFGHIJ';
                 const address = cols[this.col - 1] + this.row;
