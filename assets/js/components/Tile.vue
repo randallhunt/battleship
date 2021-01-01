@@ -1,5 +1,5 @@
 <template>
-  <td :class="computedClass" @click="guess()" key="'cell' + colCode() + row">
+  <td :class="computedClass" @click="guess" @mouseenter="mouseenter" @mouseleave="mouseleave" @mousedown="mousedown" @mouseup="mouseup" key="'cell' + colCode() + row">
       <div v-if="hit">X</div>
       <div v-if="miss">O</div>
   </td>
@@ -29,7 +29,7 @@ export default {
         computedClass() {
             let result = "tile";
             if (this.mine) {
-                const cell = toCell(this.col, this.row);
+                const cell = this.address;  // toCell(this.col, this.row);
                 if (this.$ships.collision([cell])) result += ' boat';
             } else {
                 if (this.miss) result += ' miss';
@@ -37,14 +37,31 @@ export default {
             }
 
             return result;
+        },
+        address() {
+            return toCell(this.col, this.row);
         }
     },
     methods: {
-        mousedown() {
+        mousedown(e) {
             if (!this.mine) return;
+            console.log('mousedown: ', this.address);
+            // console.log(e);
         },
-        mouseup() {
+        mouseup(e) {
             if (!this.mine) return;
+            console.log('mouseup: ', this.address);
+            // console.log(e);
+        },
+        mouseenter(e) {
+            if (!this.mine) return;
+            console.log('mouseenter: ', this.address);
+            // console.log(e);
+        },
+        mouseleave(e) {
+            if (!this.mine) return;
+            console.log('mouseleavd: ', this.address);
+            // console.log(e);
         },
         guess() {
             if (this.mine) return;
