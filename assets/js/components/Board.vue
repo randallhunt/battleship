@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div class="board" unselectable="on" onselectstart="return false;">
     <h1>{{title}}</h1>
     <table>
         <thead>
@@ -54,4 +54,7 @@ export default {
     text-align: center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, .8);
 }
+/* .board th {
+    pointer-events: none;
+} */
 </style>
