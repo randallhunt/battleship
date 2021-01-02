@@ -1,11 +1,13 @@
-const cols = 'ABCDEFGHIJ';
+const COLS = 'ABCDEFGHIJ';
+const NAMES = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+let selected = null;
 
 function coordToCell(x, y) {
-    return cols.charAt(x - 1) + y;
+    return COLS.charAt(x - 1) + y;
 };
 
 function cellToCoord(cell) {
-    return [cols.indexOf(cell.charAt(0)) + 1, +cell.slice(1)];
+    return [COLS.indexOf(cell.charAt(0)) + 1, +cell.slice(1)];
 };
 
 function toCoords(kind, start, orientation) {
@@ -32,24 +34,18 @@ function toCoords(kind, start, orientation) {
 function collision(cells) {
     for (let i=0; i<cells.length; i++) {
         const pt = cells[i];
-        if (obj.carrier.indexOf(pt) > -1) return true;
-        if (obj.battleship.indexOf(pt) > -1) return true;
-        if (obj.cruiser.indexOf(pt) > -1) return true;
-        if (obj.submarine.indexOf(pt) > -1) return true;
-        if (obj.destroyer.indexOf(pt) > -1) return true;
+        for (let s=0; s<NAMES.length; s++) {
+            if (obj[NAMES[s]].indexOf(pt) > -1)
+                return NAMES[s];
+        }
     }
     return false;
 }
 
 function place(name, coords) {
-    switch (name) {
-        case 'carrier':
-        case 'battleship':
-        case 'cruiser': 
-        case 'submarine':
-        case 'destroyer':
-            obj[name] = coords;
-            return;
+    if (NAMES.indexOf(name) > -1) {
+        obj[name] = coords;
+        return;
     }
     throw "Unrecognized ship name '" + name + "'";
 }
@@ -64,6 +60,18 @@ function guess(address) {
 
     // // random hit or miss
     // return Math.round(Math.random()) ? 1 : -1;
+}
+
+function startMove(ship) {
+    selected = ship;
+}
+
+function endMove() {
+    selected = null;
+}
+
+function getShip() {
+    return selected;
 }
 
 let obj = {
@@ -81,6 +89,9 @@ let obj = {
     toCoords,
     collision,
     place,
-    guess
+    guess,
+    startMove,
+    endMove,
+    getShip
 };
 export default obj;

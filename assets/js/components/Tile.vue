@@ -7,6 +7,14 @@
 
 <script>
 const cols = 'ABCDEFGHIJ';
+const SIZES = {
+    'carrier': 5,
+    'battleship': 4,
+    'cruiser': 3,
+    'submarine': 3,
+    'destroyer': 2
+};
+
 function toCell(x, y) {
     return cols.charAt(x - 1) + y;
 }
@@ -30,7 +38,8 @@ export default {
             let result = "tile";
             if (this.mine) {
                 const cell = this.address;  // toCell(this.col, this.row);
-                if (this.$ships.collision([cell])) result += ' boat';
+                const collision = this.$ships.collision([cell]);
+                if (collision) result += ' ' + collision;
             } else {
                 if (this.miss) result += ' miss';
                 if (this.hit) result += ' hit';
@@ -44,24 +53,33 @@ export default {
     },
     methods: {
         mousedown(e) {
+            console.log('ship', this.$ships.getShip())
             if (!this.mine) return;
-            console.log('mousedown: ', this.address);
-            // console.log(e);
+            const ship = this.$ships.collision([this.address]);
+            if (!ship) return;
+            this.$ships.startMove(ship);
+            console.log('mousedown: ', this.address, ship);
         },
         mouseup(e) {
             if (!this.mine) return;
-            console.log('mouseup: ', this.address);
-            // console.log(e);
+            const ship = this.$ships.getShip();
+            console.log('drag ship: ', ship);
+            if (!ship) return;
+            // console.log(3);
+            this.$ships.endMove();
+            console.log('mouseup: ', this.address, ship);
         },
         mouseenter(e) {
             if (!this.mine) return;
-            console.log('mouseenter: ', this.address);
-            // console.log(e);
+            const ship = this.$ships.getShip();
+            if (!ship) return;
+            // console.log('mouseenter: ', this.address);
         },
         mouseleave(e) {
             if (!this.mine) return;
-            console.log('mouseleavd: ', this.address);
-            // console.log(e);
+            const ship = this.$ships.getShip();
+            if (!ship) return;
+            // console.log('mouseleave: ', this.address);
         },
         guess() {
             if (this.mine) return;
