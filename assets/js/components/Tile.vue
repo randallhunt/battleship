@@ -53,7 +53,6 @@ export default {
     },
     methods: {
         mousedown(e) {
-            console.log('ship', this.$ships.getShip())
             if (!this.mine) return;
             const ship = this.$ships.collision([this.address]);
             if (!ship) return;
@@ -63,23 +62,19 @@ export default {
         mouseup(e) {
             if (!this.mine) return;
             const ship = this.$ships.getShip();
-            console.log('drag ship: ', ship);
             if (!ship) return;
-            // console.log(3);
             this.$ships.endMove();
-            console.log('mouseup: ', this.address, ship);
+            console.log('mouseup: ', this.address);
         },
         mouseenter(e) {
             if (!this.mine) return;
             const ship = this.$ships.getShip();
             if (!ship) return;
-            // console.log('mouseenter: ', this.address);
         },
         mouseleave(e) {
             if (!this.mine) return;
             const ship = this.$ships.getShip();
             if (!ship) return;
-            // console.log('mouseleave: ', this.address);
         },
         guess() {
             if (this.mine) return;

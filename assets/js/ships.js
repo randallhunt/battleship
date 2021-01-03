@@ -36,10 +36,14 @@ function collision(cells) {
         const pt = cells[i];
         for (let s=0; s<NAMES.length; s++) {
             if (obj[NAMES[s]].indexOf(pt) > -1)
-                return NAMES[s];
+                return {
+                    name: NAMES[s],
+                    coords: obj[NAMES[s]]
+                };
         }
     }
-    return false;
+    return null;
+    // return false;
 }
 
 function place(name, coords) {
