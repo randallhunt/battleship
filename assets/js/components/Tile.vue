@@ -53,18 +53,19 @@ export default {
     },
     methods: {
         mousedown(e) {
+            console.log('address', this.address);
             if (!this.mine) return;
             const ship = this.$ships.collision([this.address]);
             if (!ship) return;
-            this.$ships.startMove(ship);
-            console.log('mousedown: ', this.address, ship);
+            this.$ships.startMove(ship, this.address);
+            // console.log('mousedown: ', this.address, ship);
         },
         mouseup(e) {
             if (!this.mine) return;
             const ship = this.$ships.getShip();
             if (!ship) return;
-            this.$ships.endMove();
-            console.log('mouseup: ', this.address);
+            this.$ships.endMove(this.address);
+            // console.log('mouseup: ', this.address);
         },
         mouseenter(e) {
             if (!this.mine) return;

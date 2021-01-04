@@ -31,6 +31,14 @@ function toCoords(kind, start, orientation) {
     return result;
 }
 
+function isVertical(cells) {
+    let last = null;
+    return cells.reduce((val, cell) => {
+        if (!last) last = cell.charAt(0);
+        return val && last === cell.charAt(0);
+    }, true);
+}
+
 function collision(cells) {
     for (let i=0; i<cells.length; i++) {
         const pt = cells[i];
@@ -54,6 +62,7 @@ function place(name, coords) {
     throw "Unrecognized ship name '" + name + "'";
 }
 
+
 function guess(address) {
     if (obj.guesses.indexOf(address) > -1) {
         return 0;
@@ -66,11 +75,14 @@ function guess(address) {
     // return Math.round(Math.random()) ? 1 : -1;
 }
 
-function startMove(ship) {
-    selected = ship;
+function startMove(ship, source) {
+    console.log('drag ', ship, ' from ', source);
+    console.log(isVertical(ship.coords) ? 'vertical' : 'horizontal');
+    selected = {ship, source};
 }
 
-function endMove() {
+function endMove(destination) {
+    console.log('dropped ', destination);
     selected = null;
 }
 
