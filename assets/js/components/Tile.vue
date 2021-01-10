@@ -39,12 +39,14 @@ export default {
             if (this.mine) {
                 const cell = this.address;  // toCell(this.col, this.row);
                 const collision = this.$ships.collision([cell]);
-                if (collision) result += ' ' + collision;
+                if (collision) result += ' ' + collision.name;
             } else {
                 if (this.miss) result += ' miss';
                 if (this.hit) result += ' hit';
             }
-
+            // if (this.$ships.selected) {
+            //     console.log(this.$ships.selected);
+            // }
             return result;
         },
         address() {
@@ -127,5 +129,12 @@ export default {
 }
 .row:last-child .tile:last-child {
     border-right: solid 1px #000;
+}
+.tile.carrier,
+.tile.battleship,
+.tile.cruiser,
+.tile.submarine,
+.tile.destroyer {
+    background-color: #d6c659;
 }
 </style>
