@@ -22,8 +22,8 @@ function toCoords(kind, start, orientation) {
         case 'destroyer': size = 2; break;
     }
     if (size === 0) {
-        alert("unrecognizes ship type: '" + kind + "'");
-        throw "unrecognizes ship type!";
+        console.error("unrecognized ship type: '" + kind + "'");
+        throw "unrecognized ship type!";
         return;
     }
     for (let i=0; i < size; i++) {
@@ -65,15 +65,9 @@ function place(name, coords) {
 
 
 function guess(address) {
-    if (obj.guesses.indexOf(address) > -1) {
-        return 0;
-    }
+    if (obj.guesses.indexOf(address) > -1) return 0;
     obj.guesses.push(address);
-
     return collision([address]) ? 1 : -1;
-
-    // // random hit or miss
-    // return Math.round(Math.random()) ? 1 : -1;
 }
 
 function newOrigin(coords, offset, vertical) {
@@ -84,7 +78,6 @@ function newOrigin(coords, offset, vertical) {
 }
 
 function dragCoords(ship, source, vertical) {
-    // const ship = this.$ships.selected;
     if (!ship) return [];
     const range = [...Array(ship.coords.length).keys()];
     const col = COLS.indexOf(source[0]);
@@ -96,16 +89,13 @@ function dragCoords(ship, source, vertical) {
 function startMove(ship, source) {
     const vertical = isVertical(ship.coords);
     const offset = ship.coords.indexOf(source);
-    // console.log('drag: ', ship, ' from:' + source, ' vertical? ' + vertical, ' offset: ' + offset);
     selected = {ship, source, offset, vertical};
 }
 
 function moveTo(tile) {
     if (!selected) return;
-    // const source = selected.ship.coords[0];
     const origin = newOrigin(tile, selected.offset, selected.vertical);
     hover = dragCoords(selected.ship, origin, selected.ship.vertical);
-    // console.log('hover', hover);
 }
 
 function endMove(destination) {
