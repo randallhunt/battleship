@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         mousedown(e) {
-            console.log('address', this.address);
+            // console.log('address', this.address);
             if (!this.mine) return;
             const ship = this.$ships.collision([this.address]);
             if (!ship) return;
@@ -73,6 +73,7 @@ export default {
             if (!this.mine) return;
             const ship = this.$ships.getShip();
             if (!ship) return;
+            this.$ships.moveTo(this.address);
         },
         mouseleave(e) {
             if (!this.mine) return;

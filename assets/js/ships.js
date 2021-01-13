@@ -1,6 +1,7 @@
 const COLS = 'ABCDEFGHIJ';
 const NAMES = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
 let selected = null;
+let hover = [];
 
 function coordToCell(x, y) {
     return COLS.charAt(x - 1) + y;
@@ -75,14 +76,41 @@ function guess(address) {
     // return Math.round(Math.random()) ? 1 : -1;
 }
 
+function newOrigin(coords, offset, vertical) {
+    let col = COLS.indexOf(coords[0]);
+    let row = coords.slice(1);
+    if (vertical) row -= offset; else col -= offset;
+    return COLS[col] + row;
+}
+
+function dragCoords(ship, source, vertical) {
+    // const ship = this.$ships.selected;
+    if (!ship) return [];
+    const range = [...Array(ship.coords.length).keys()];
+    const col = COLS.indexOf(source[0]);
+    const row = +source.slice(1);
+    if (vertical) return range.map(i => COLS[col] + (row + i));
+    return range.map(i => COLS[col + i] + row);
+}
+
 function startMove(ship, source) {
-    console.log('drag ', ship, ' from ', source);
-    console.log(isVertical(ship.coords) ? 'vertical' : 'horizontal');
-    selected = {ship, source};
+    const vertical = isVertical(ship.coords);
+    const offset = ship.coords.indexOf(source);
+    // console.log('drag: ', ship, ' from:' + source, ' vertical? ' + vertical, ' offset: ' + offset);
+    selected = {ship, source, offset, vertical};
+}
+
+function moveTo(tile) {
+    if (!selected) return;
+    // const source = selected.ship.coords[0];
+    const origin = newOrigin(tile, selected.offset, selected.vertical);
+    hover = dragCoords(selected.ship, origin, selected.ship.vertical);
+    // console.log('hover', hover);
 }
 
 function endMove(destination) {
     console.log('dropped ', destination);
+    place(selected.ship.name, hover);
     selected = null;
 }
 
@@ -107,6 +135,7 @@ let obj = {
     place,
     guess,
     startMove,
+    moveTo,
     endMove,
     getShip
 };
